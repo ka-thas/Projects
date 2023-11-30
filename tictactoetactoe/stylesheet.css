@@ -1,0 +1,24 @@
+body {
+    background-color: rgba(30, 30, 30, 0.3);
+}
+.tictactoetactoe {
+    display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+    width: 500px;
+    height: 500px;
+}
+
+.tictactoe {
+    background-color: rgba(34, 56, 93, 0.493);
+    width: 100px;
+    height: 100px;
+    flex-grow: 1;
+}
+button {
+    margin: 5px;
+    height: 70px;
+    width: 70px;
+    border: 1px solid black;
+    border-radius: 10%;
+}
