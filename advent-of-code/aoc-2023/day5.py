@@ -3,7 +3,7 @@ maps = {}
 seeds = []
 with open("inputs/day5.txt") as f:
     seeds = f.readline().strip().split()[1:]
-    seeds = (int(x) for x in seeds)
+    seeds = [int(x) for x in seeds]
     from_to = ""
     for line in f:
         line = line.strip()
@@ -13,24 +13,27 @@ with open("inputs/day5.txt") as f:
 
         if ":" in line:
             from_to = line
-            maps[from_to] = {}
+            maps[from_to] = []
             continue
-        
+
         line = line.split()
         line = [int(x) for x in line]
-        for i in range(line[2]):
-            seed = line[1] + i
-            soil = line[0] + i
-            maps[from_to][seed] = soil
+        line[0] = line[0] - line[1]
+        maps[from_to].append(line)
 
-print("Done reading from file!")
+print("===========================================")
 
 val = None
 locations = []
 for i in seeds:
+    print("\n=========")
     val = i
-    for map in maps:
-        if val in maps[map].keys():
-            val = maps[map][val]
+    for key in maps:
+        for line in maps[key]:
+            if val >= line[1] and val < line[1] + line[2]:
+                val += line[0]
+                print(i, key, val)
+                break
+
     locations.append(val)
 print(min(locations))

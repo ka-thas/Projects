@@ -1,0 +1,10 @@
+# Constants
+WIDTH, HEIGHT = 800, 600
+GRID_SIZE = 50
+GRID_ROWS, GRID_COLS = 9, 9
+FPS = 60
+
+# Colors
+WHITE = (255, 255, 255)
+RED = (255, 0, 0)
+BLACK = (0, 0, 0)
