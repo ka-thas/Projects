@@ -5,9 +5,12 @@
 body {
     font-family: urbanist, sans-serif;
     font-size: larger;
-    background-color: #111;
-/*     background: linear-gradient(270deg, rgba(16,16,16,1) 0%, rgba(33,13,73,1) 100%);
- */    color: #fff;
+    color: #fff;
+    background-color: #e5e5f7;
+    opacity: 0.8;
+    background-image:  linear-gradient(#444cf7 2px, transparent 2px), linear-gradient(90deg, #444cf7 2px, transparent 2px), linear-gradient(#444cf7 1px, transparent 1px), linear-gradient(90deg, #444cf7 1px, #e5e5f7 1px);
+    background-size: 50px 50px, 50px 50px, 10px 10px, 10px 10px;
+    background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
 }
 div {
     border-radius: 15px;
@@ -50,9 +53,4 @@ section {
     padding: 20px;
     background-color: var(--background-color);
 }
-.gradient-text {
-    background: linear-gradient(100deg, #00ff80, #efff78);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
+/* Photo by <a href="https://unsplash.com/@googledeepmind?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Google DeepMind</a> on <a href="https://unsplash.com/photos/map-s2TPKAD6fag?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>*/
