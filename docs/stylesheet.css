@@ -6,8 +6,8 @@ body {
     font-family: urbanist, sans-serif;
     font-size: larger;
     background-color: #111;
-/*     background: linear-gradient(270deg, rgba(16,16,16,1) 0%, rgba(33,13,73,1) 100%);
- */    color: #fff;
+    background: linear-gradient(270deg, rgba(16,16,16,1) 0%, rgba(33,13,73,1) 100%);
+    color: #fff;
 }
 div {
     border-radius: 15px;
