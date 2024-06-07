@@ -1,4 +1,4 @@
-#include "cell.h"
+#include "Cell.h"
 
 Cell::Cell() : alive(false) {}
 
@@ -7,7 +7,7 @@ bool Cell::isAlive() const
     return alive;
 }
 
-void Cell::setAlive(bool Alive)
+void Cell::setAlive(bool alive)
 {
     this->alive = alive;
 }

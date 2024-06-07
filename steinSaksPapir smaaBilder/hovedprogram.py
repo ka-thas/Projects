@@ -14,7 +14,7 @@ HEIGHT = 700
 
 
 def draw():
-    screen.fill((100, 90, 120))
+    screen.fill((120, 110, 110))
     spillbrett.tegn(screen)
 
 

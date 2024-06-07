@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include "cell.h"
+#include "Cell.h"
 
 class Grid
 {
@@ -13,6 +13,6 @@ public:
 private:
     int rows;
     int cols;
-    std::vector<std::vector<Cell>> cells;
+    std::vector<std::vector<Cell> > cells;
     int countAliveNeighbours(int row, int col) const;
 };

@@ -13,7 +13,7 @@ void Grid::initializeRandom()
     {
         for (int j = 0; j < cols; j++)
         {
-            cells[i][j].settAlive(rand() % 2 == 1);
+            cells[i][j].setAlive(rand() % 2 == 1);
         }
     }
 }
@@ -24,7 +24,7 @@ void Grid::printGrid() const
     {
         for (int j = 0; j < cols; j++)
         {
-            std::cout << (cells[i][j].isAlive() ? 'O' : ' ') << ' ';
+            std::cout << (cells[i][j].isAlive() ? '*' : ' ') << ' ';
         }
         std::cout << '\n';
     }
@@ -40,7 +40,7 @@ int Grid::countAliveNeighbours(int row, int col) const
         {
             int ni = row + i;
             int nj = row + j;
-            if (ni >= 0 && ni < rows && nj >= 0 && nj < cols && !(i == 0 && j == 0))
+            if (ni >= 0 && ni < rows && nj >= 0 && nj < cols && !(i == 0 && j == 0)) // check if the cell is within the grid
             {
                 count += cells[ni][nj].isAlive() ? 1 : 0;
             }
@@ -51,5 +51,29 @@ int Grid::countAliveNeighbours(int row, int col) const
 
 void Grid::update()
 {
-    std::vector < std::vector<Cell>
+    std::vector<std::vector<Cell>> newCells = cells; // Next generation
+
+    for (int i = 0; i < rows; i++)
+    {
+        for (int j = 0; j < cols; j++)
+        {
+            int aliveNeighbours = countAliveNeighbours(i, j);
+
+            if (cells[i][j].isAlive())
+            {
+                if (aliveNeighbours < 2 || aliveNeighbours > 3)
+                {
+                    newCells[i][j].setAlive(false);
+                }
+            }
+            else
+            {
+                if (aliveNeighbours == 3)
+                {
+                    newCells[i][j].setAlive(true);
+                }
+            }
+        }
+    }
+    cells = newCells;
 }
