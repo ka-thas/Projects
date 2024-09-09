@@ -24,7 +24,7 @@ def load_data(directory):
             people[row["id"]] = {
                 "name": row["name"],
                 "birth": row["birth"],
-                "movies": set()
+                "movies": set(),
             }
             if row["name"].lower() not in names:
                 names[row["name"].lower()] = {row["id"]}
@@ -38,7 +38,7 @@ def load_data(directory):
             movies[row["id"]] = {
                 "title": row["title"],
                 "year": row["year"],
-                "stars": set()
+                "stars": set(),
             }
 
     # Load stars
@@ -92,8 +92,28 @@ def shortest_path(source, target):
     If no possible path, returns None.
     """
 
-    # TODO
-    raise NotImplementedError
+    visited = set()
+    queue = QueueFrontier()
+    path = [(0, source)]
+    queue.add(path)
+
+    # BFS
+    while not queue.empty():
+        path = queue.remove()
+        node = path[-1][1]
+        visited.add(node)
+
+        if node == target:
+            path.pop(0)
+            return path
+
+        neighbors = neighbors_for_person(node)
+        for neighbor in neighbors:
+            if neighbor[1] not in visited:
+                if neighbor[1] == target:
+                    return path + [neighbor]
+                new_path = list(path + [neighbor])
+                queue.add(new_path)
 
 
 def person_id_for_name(name):
