@@ -156,6 +156,20 @@ class MinesweeperAI:
         # List of sentences about the game known to be true
         self.knowledge = []
 
+    def get_neighbors(self, cell):
+        """
+        Returns a set of all valid neighbors of a cell.
+        Including the cell itself.
+        """
+
+        neighbors = set()
+        for i in range(cell[0] - 1, cell[0] + 2):
+            for j in range(cell[1] - 1, cell[1] + 2):
+                if 0 <= i < self.height and 0 <= j < self.width:
+                    neighbors.add((i, j))
+
+        return neighbors
+
     def mark_mine(self, cell):
         """
         Marks a cell as a mine, and updates all knowledge
@@ -246,7 +260,14 @@ class MinesweeperAI:
         This function may use the knowledge in self.mines, self.safes
         and self.moves_made, but should not modify any of those values.
         """
-        raise NotImplementedError
+
+        # Iterate over all safe cells
+        for cell in self.safes:
+            if cell not in self.moves_made:
+                return cell
+
+        # If no safe moves are possible, return None
+        return None
 
     def make_random_move(self):
         """
@@ -255,4 +276,12 @@ class MinesweeperAI:
             1) have not already been chosen, and
             2) are not known to be mines
         """
-        raise NotImplementedError
+
+        # Generate all possible moves
+        possible_moves = set(itertools.product(range(self.height), range(self.width)))
+
+        # Return a random move that has not already been made or is not a mine
+        for move in possible_moves:
+            if move not in self.moves_made and move not in self.mines:
+                print(move)
+                return move
