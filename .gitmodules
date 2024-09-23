@@ -1,0 +1,3 @@
+[submodule "whOOPs"]
+	path = whOOPs
+	url = git@github.com:ka-thas/whOOPs.git
