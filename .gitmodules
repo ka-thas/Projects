@@ -1,3 +1,15 @@
 [submodule "whOOPs"]
 	path = whOOPs
 	url = git@github.com:ka-thas/whOOPs.git
+[submodule "snake-js"]
+	path = snake-js
+	url = git@github.com:ka-thas/snake-js.git
+[submodule "edX"]
+	path = edX
+	url = git@github.com:ka-thas/edX.git
+[submodule "plantepet"]
+	path = plantepet
+	url = git@github.com:ka-thas/plant.git
+[submodule "pygame-plant"]
+	path = pygame-plant
+	url = git@github.com:ka-thas/pygame-plant.git
