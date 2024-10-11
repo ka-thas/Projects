@@ -7,8 +7,11 @@
 [submodule "edX"]
 	path = edX
 	url = git@github.com:ka-thas/edX.git
-[submodule "vgs-informatikk2-sluttprosjekt"]
+[submodule "plantepet"]
 	path = plantepet
+	url = git@github.com:ka-thas/vgs-informatikk2-sluttprosjekt.git
+[submodule "vgs-informatikk2-sluttprosjekt"]
+	path = vgs-informatikk2-sluttprosjekt
 	url = git@github.com:ka-thas/vgs-informatikk2-sluttprosjekt.git
 [submodule "pygame"]
 	path = pygame
