@@ -9,7 +9,7 @@
 	url = git@github.com:ka-thas/edX.git
 [submodule "plantepet"]
 	path = plantepet
-	url = git@github.com:ka-thas/plant.git
+	url = git@github.com:ka-thas/vgs-informatikk2-sluttprosjekt.git
 [submodule "pygame-plant"]
-	path = pygame-plant
+	path = pygame
 	url = git@github.com:ka-thas/pygame-plant.git
