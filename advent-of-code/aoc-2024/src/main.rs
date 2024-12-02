@@ -21,26 +21,41 @@ fn main() -> io::Result<()> {
             numbers.push(num);
         }
 
-        println!("{:?}", numbers);
-
         // code logic
-        let i = 1;
-        let mut j = 0;
-        let is_increasing = numbers[i] - numbers[j] > 0;
+        'second: for try_nr in 0..2 {
+            let i = 1;
+            let mut j = 0;
+            let is_increasing = numbers[i] - numbers[j] > 0;
 
-        println!("{}", is_increasing);
+            println!("{}", try_nr);
+            println!("{:?}", numbers);
+            for i in 1..numbers.len() {
+                if (numbers[i] - numbers[j] > 0) != is_increasing {
+                    if try_nr == 0 {
+                        numbers.remove(j);
+                        println!("second");
+                        continue 'second;
+                    }
+                    println!("outer");
+                    continue 'outer;
+                } else if (numbers[i] - numbers[j]).abs() == 0
+                    || (numbers[i] - numbers[j]).abs() > 3
+                {
+                    if try_nr == 0 {
+                        numbers.remove(j);
+                        println!("second");
+                        continue 'second;
+                    }
+                    println!("outer");
+                    continue 'outer;
+                }
 
-        for i in 1..numbers.len() {
-            if (numbers[i] - numbers[j] > 0) != is_increasing {
-                continue 'outer;
-            } else if (numbers[i] - numbers[j]).abs() == 0 || (numbers[i] - numbers[j]).abs() > 3 {
-                continue 'outer;
+                j += 1;
             }
-
-            j += 1;
+            num_safe += 1;
+            println!("num safe!");
+            break;
         }
-        num_safe += 1;
-        println!("num safe!")
     }
 
     println!("{}", num_safe);
