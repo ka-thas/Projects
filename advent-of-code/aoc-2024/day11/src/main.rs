@@ -12,19 +12,18 @@ fn main() -> Result<(), Box<dyn Error>> {
     }
 
     for i in 0..75 {
-        let mut new_stones = Vec::new();
+        let mut new_stones = Vec::with_capacity(stones.len() * 2);
         for stone in stones.iter() {
             if *stone == 0 {
                 new_stones.push(1);
                 continue;
             }
-            let stone_str = stone.to_string();
-            if stone_str.len() % 2 == 0 {
-                let new_lengths = stone_str.len() / 2;
-                let left = stone_str[..new_lengths].parse::<u64>().unwrap();
-                let right = stone_str[new_lengths..].parse::<u64>().unwrap();
-                new_stones.push(left);
-                new_stones.push(right);
+            let temp = stone.ilog10() + 1; // i64.ilog10() is available in Rust 1.67+
+            if temp % 2 == 0 {
+                let a = stone / 10_u64.pow((temp / 2) as u32);
+                let b = stone % 10_u64.pow((temp / 2) as u32);
+                new_stones.push(a);
+                new_stones.push(b);
             } else {
                 new_stones.push(stone * 2024);
             }
