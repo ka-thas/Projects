@@ -1,64 +1,82 @@
-use std::fs::File;
-use std::io::{self, BufRead};
-use std::path::Path;
+use std::fs::read_to_string;
 
-//part 2
-fn main() -> io::Result<()> {
-    let path = Path::new("src/input2.txt");
-    let input = File::open(path)?;
-    let reader = io::BufReader::new(input);
+const WORD: &str = "MAS";
+const DIRECTIONS: [(i32, i32); 4] = [
+    (1, 1),   // Down-right (diagonal)
+    (-1, -1), // Up-left (diagonal)
+    (1, -1),  // Down-left (diagonal)
+    (-1, 1),  // Up-right (diagonal)
+];
 
-    let mut num_safe = 0;
+fn main() {
+    let input = read_to_string("input4.txt").expect("Failed to read input file");
+    let grid: Vec<Vec<char>> = input.lines().map(|line| line.chars().collect()).collect();
 
-    'outer: for line in reader.lines() {
-        let line = line?;
-        let temp_numbers = line
-            .split_whitespace()
-            .map(|num| num.parse::<i32>().unwrap());
-
-        let mut numbers = Vec::new();
-        for num in temp_numbers {
-            numbers.push(num);
-        }
-
-        // code logic
-        'second: for try_nr in 0..2 {
-            let i = 1;
-            let mut j = 0;
-            let is_increasing = numbers[i] - numbers[j] > 0;
-
-            println!("{}", try_nr);
-            println!("{:?}", numbers);
-            for i in 1..numbers.len() {
-                if (numbers[i] - numbers[j] > 0) != is_increasing {
-                    if try_nr == 0 {
-                        numbers.remove(j);
-                        println!("second");
-                        continue 'second;
+    let mut found_coords = Vec::new();
+    let mut found_coords2 = Vec::new();
+    for row in 0..grid.len() {
+        for col in 0..grid[row].len() {
+            let mut i = 0;
+            for &(dir_r, dir_c) in &DIRECTIONS {
+                if find_word(&grid, row, col, dir_r, dir_c, WORD) {
+                    found_coords.push((row, col));
+                    if i == 0 {
+                        // down-right
+                        if find_word(&grid, row, col + 2, 1, -1, WORD)
+                            || find_word(&grid, row + 2, col, -1, 1, WORD)
+                        {
+                            found_coords2.push((row, col));
+                        }
                     }
-                    println!("outer");
-                    continue 'outer;
-                } else if (numbers[i] - numbers[j]).abs() == 0
-                    || (numbers[i] - numbers[j]).abs() > 3
-                {
-                    if try_nr == 0 {
-                        numbers.remove(j);
-                        println!("second");
-                        continue 'second;
+                    if i == 1 {
+                        // up-left
+                        if find_word(&grid, row, col - 2, 1, -1, WORD)
+                            || find_word(&grid, row - 2, col, -1, 1, WORD)
+                        {
+                            found_coords2.push((row, col));
+                        }
                     }
-                    println!("outer");
-                    continue 'outer;
+                    if i == 2 {
+                        // down-left
+                        if find_word(&grid, row - 2, col, 1, 1, WORD)
+                            || find_word(&grid, row, col + 2, -1, -1, WORD)
+                        {
+                            found_coords2.push((row, col));
+                        }
+                    }
+                    if i == 3 {
+                        // up-right
+                        if find_word(&grid, row, col - 2, 1, 1, WORD)
+                            || find_word(&grid, row + 2, col, -1, -1, WORD)
+                        {
+                            found_coords2.push((row, col));
+                        }
+                    }
                 }
-
-                j += 1;
+                i += 1;
             }
-            num_safe += 1;
-            println!("num safe!");
-            break;
         }
     }
 
-    println!("{}", num_safe);
+    for (row, col) in found_coords2.iter() {
+        println!("Found X-MAS starting at ({}, {})", row, col);
+    }
+    println!("{}", found_coords2.len())
+}
 
-    Ok(())
+fn find_word(grid: &[Vec<char>], row: usize, col: usize, dr: i32, dc: i32, word: &str) -> bool {
+    let mut r = row as i32;
+    let mut c = col as i32;
+
+    for ch in word.chars() {
+        if r < 0 || r >= grid.len() as i32 || c < 0 || c >= grid[0].len() as i32 {
+            return false;
+        }
+        if grid[r as usize][c as usize] != ch {
+            return false;
+        }
+        r += dr;
+        c += dc;
+    }
+    true
 }
