@@ -1,70 +1,62 @@
-// Day 12
-// doesn't work
+// Day 13
+// doesn't work yet
 
-use std::collections::HashMap;
-use std::error::Error;
 use std::fs;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let input: String = fs::read_to_string("./src/input12.txt")?;
-    println!("{}", input);
-    let mut grid: Vec<Vec<char>> = Vec::new();
-    for line in input.split("\n") {
-        let mut row = Vec::new();
-        for c in line.chars() {
-            row.push(c);
-        }
-        grid.push(row);
+    let input = fs::read_to_string("./src/input13.txt")?;
+    let mut stored_input = Vec::new();
+    for i in input.split("\n") {
+        stored_input.push(i);
     }
-    println!("{:?}", grid);
-
-    let M = grid.len();
-    let N = grid[0].len();
-
-    let mut area: HashMap<char, i32> = HashMap::new();
-    let mut perimeter: HashMap<char, i32> = HashMap::new();
-
-    for (i, row) in grid.iter().enumerate() {
-        for (j, col) in row.iter().enumerate() {
-            *area.entry(*col).or_insert(0) += 1;
-
-            let mut edges = 0;
-            if i == 0 || i == M - 1 {
-                // Upper or lower edge
-                edges += 1;
-            }
-            if j == 0 || j == N - 1 {
-                // Right or left edge
-                edges += 1;
-            }
-            if i > 0 && grid[i - 1][j] != *col {
-                // Up
-                edges += 1;
-            }
-            if i < M - 1 && grid[i + 1][j] != *col {
-                // Down
-                edges += 1;
-            }
-            if j > 0 && grid[i][j - 1] != *col {
-                // left
-                edges += 1;
-            }
-            if j < N - 1 && grid[i][j + 1] != *col {
-                // right
-                edges += 1;
-            }
-            *perimeter.entry(*col).or_insert(0) += edges;
-        }
-    }
-
-    println!("{:?}", area);
-    println!("{:?}", perimeter);
 
     let mut sum = 0;
-    for (key, value) in &area {
-        sum += value * perimeter.get(key).unwrap();
-    }
 
+    for i in (0..stored_input.len()).step_by(4) {
+        let button_a: Vec<i32> = stored_input[i]
+            .split(|c: char| !c.is_numeric()) // Split by any non-numeric character
+            .filter_map(|s| s.parse::<i32>().ok()) // Parse each part to i32, ignoring non-numbers
+            .collect();
+        let button_b: Vec<i32> = stored_input[i + 1]
+            .split(|c: char| !c.is_numeric()) // Split by any non-numeric character
+            .filter_map(|s| s.parse::<i32>().ok()) // Parse each part to i32, ignoring non-numbers
+            .collect();
+        let prize: Vec<i32> = stored_input[i + 2]
+            .split(|c: char| !c.is_numeric()) // Split by any non-numeric character
+            .filter_map(|s| s.parse::<i32>().ok()) // Parse each part to i32, ignoring non-numbers
+            .collect();
+
+        let mut tokens_list: Vec<i32> = Vec::from([0]);
+
+        /* println!("{:?}", button_a);
+        println!("{:?}", button_b);
+        println!("{:?}", prize); */
+
+        for b in 0..=100 {
+            let x_pos = button_b[0] * b;
+            let y_pos = button_b[1] * b;
+
+            if x_pos > prize[0] || y_pos > prize[1] {
+                break;
+            }
+
+            for a in 0..=100 {
+                let x_pos = x_pos + button_a[0] * a;
+                let y_pos = y_pos + button_a[1] * a;
+
+                // println!("{}, {}", x_pos, y_pos);
+                if x_pos > prize[0] || y_pos > prize[1] {
+                    // println!("");
+                    break;
+                }
+                if x_pos == prize[0] && y_pos == prize[1] {
+                    // println!("WIN! {}, {} -> {}", a, b, a + b);
+                    tokens_list.push(3 * a + b);
+                }
+            }
+        }
+        sum += tokens_list.pop().unwrap();
+    }
     println!("{}", sum);
 
     Ok(())
