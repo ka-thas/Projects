@@ -16,3 +16,6 @@
 [submodule "pygame"]
 	path = pygame
 	url = git@github.com:ka-thas/pygame-plant.git
+[submodule "mikro-webpage"]
+	path = mikro-webpage
+	url = git@github.com:ka-thas/mikro-webpage.git
